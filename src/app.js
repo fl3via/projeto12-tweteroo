@@ -50,22 +50,12 @@ app.post('/tweets', (req, res) => {
 
 // Rota para /tweets (GET)
 app.get('/tweets', (req, res) => {
-    let ultimosDezTweets;
-    if (tweets.length > 10) {
-      ultimosDezTweets = tweets.slice(-10).map(tweet => {
-        const { username, tweet: textoTweet } = tweet;
-        const usuario = obterUsuario(username);
-        const { avatar } = usuario;
-        return { username, avatar, tweet: textoTweet };
-      });
-    } else {
-      ultimosDezTweets = tweets.map(tweet => {
-        const { username, tweet: textoTweet } = tweet;
-        const usuario = obterUsuario(username);
-        const { avatar } = usuario;
-        return { username, avatar, tweet: textoTweet };
-      });
-    }
+  const ultimosDezTweets = tweets.slice(-10).map(tweet => {
+    const { username, tweet: textoTweet } = tweet
+    const usuario = obterUsuario(username)
+    const { avatar } = usuario
+    return { username, avatar, tweet: textoTweet }
+  })
 
   if(ultimosDezTweets.length === 0) {
     return res.json([])
