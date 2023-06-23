@@ -3,20 +3,9 @@ import express from 'express';
 const app = express();
 app.use(express.json());
 
-const usuarios = [
-  {
-    username: 'bobesponja',
-    avatar: 'https://cdn.shopify.com/s/files/1/0150/0643/3380/files/Screen_Shot_2019-07-01_at_11.35.42_AM_370x230@2x.png'
-  }
-];
+const usuarios = []
 
-const tweets = [
-  {
-    username: 'bobesponja',
-    avatar: 'https://cdn.shopify.com/s/files/1/0150/0643/3380/files/Screen_Shot_2019-07-01_at_11.35.42_AM_370x230@2x.png',
-    tweet: 'Eu amo hambúrguer de siri!'
-  }
-];
+const tweets = []
 
 app.post('/sign-up', (req, res) => {
   const { username, avatar } = req.body;
@@ -43,19 +32,13 @@ app.post('/tweets', (req, res) => {
 });
 
 app.get('/tweets', (req, res) => {
-  if (tweets.length === 0) {
-    return res.json([]);
-  }
 
-  const ultimosDezTweets = tweets.slice(-10).map(tweet => {
-    const { username, tweet: textoTweet } = tweet;
-    const usuario = obterUsuario(username);
-    const { avatar } = usuario;
-    return { username, avatar, tweet: textoTweet };
-  });
-
-  return res.json(ultimosDezTweets);
-});
+  const ultimosDezTweets = tweets.map((tweet) => {
+    const user = user.find((t) => t.username === tweet.username)
+    return { ...tweet, avatar: user.avatar}
+  })
+  res.send(ultimosDezTweets.slice(-10))
+})
 
 function usuarioJaCadastrado(username) {
   return usuarios.find(usuario => usuario.username === username) !== undefined;
