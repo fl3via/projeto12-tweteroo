@@ -34,7 +34,7 @@ app.post('/tweets', (req, res) => {
 app.get('/tweets', (req, res) => {
 
   const ultimosDezTweets = tweets.map((tweet) => {
-    const user = user.find((t) => t.username === tweet.username)
+    const user = usuarios.find((t) => t.username === tweet.username)
     return { ...tweet, avatar: user.avatar}
   })
   res.send(ultimosDezTweets.slice(-10))
